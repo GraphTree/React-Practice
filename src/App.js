@@ -1,3 +1,4 @@
+// to do app
 import {useState, useEffect} from "react"
 
 function App() {
@@ -31,9 +32,9 @@ function App() {
         <button >Add To Do</button>
     </form>
     <ul>
-    {toDos.map((item)=> <li>{item}</li>)}
+    {toDos.map((item, index)=> <li key={index}>{item}</li>)}
     </ul>
-  </div>)  ;
+  </div>)   ;
 }
 
 export default App;
