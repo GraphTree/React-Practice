@@ -29,6 +29,7 @@ function InputBlock(props) {
         placeholder="type dollar" 
         type="text"
         onChange={onChange}
+        {props.flag !===false ? ()}
         />
   </form>
   )
