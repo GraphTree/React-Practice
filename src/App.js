@@ -6,18 +6,24 @@ import {
 } from "react-router-dom";
 import Home from "./routes/Home"
 import Detail from "./routes/Detail"
+import Graph from "./routes/Graph"
 
 
 function App() {
+
 return (
-  <Router>
-    <Routes>
-      <Route path="hello">Hello</Route>
-      <Route path="" element={<Home/>} />
-      <Route path="movie/:id" element={<Detail/>} />
-    </Routes>
-  </Router>
+  <div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home/>} />
+        <Route path="Detail" element={<Detail/>} />
+        <Route path="Graph" element={<Graph/>} />
+      </Routes>
+    </Router>
+      
+  </div>
 )
+
 }
 
 export default App;
