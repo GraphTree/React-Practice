@@ -31,7 +31,8 @@ const Coin = styled.li`
     border-radius : 15px;
     a {
         transition: color 0.2s ease0-in;
-        display : block;
+        display : flex;
+        align-items : center;
     }
     &:hover {
         a {
@@ -53,6 +54,7 @@ const Loader = styled.span`
 const Img = styled.img`
     width:25px ;
     height:25px;
+    margin-right:10px
 `
 
 
@@ -61,7 +63,7 @@ function Coins() {
     const [loading, setLoading] = useState(true);
     useEffect(() => {
         (async () => {
-            const response = await fetch('https://api.coingecko.com/api/v3/coins/list');
+            const response = await fetch('https://api.coinpaprika.com/v1/coins');
             const json = await response.json();
             setCoins(json.slice(0,10));
             setLoading(false);
@@ -74,7 +76,7 @@ function Coins() {
             </Header>
             {loading ? (<Loader>loading ...</Loader>) : (<CoinList>
                 {coins.map(coin => <Coin key={coin.id}>
-                                    <Link to={`/${coin.id}`}>
+                                    <Link to={`/${coin.id}`} state={coin}>
                                     <Img src = {`https://coinicons-api.vercel.app/api/icon/btc}`}/>
                                     {coin.name} &rarr;</Link>
                                     </Coin>)}
