@@ -1,15 +1,18 @@
 import styled from 'styled-components'
 import {Link} from 'react-router-dom'
 import {useState, useEffect} from 'react'
+import {useQuery} from 'react-query'
+import {fetchCoin} from './api'
+
 
 interface CoinObject {
     id:string;
     name:string;
     symbol:string;
-    rank:number;
-    is_new:boolean;
-    is_active:boolean;
-    type:string
+    rank:string;
+    description:string;
+    open_source:string;
+
 }
 
 const Container = styled.div`
@@ -59,23 +62,17 @@ const Img = styled.img`
 
 
 function Coins() {
-    const [coins, setCoins] = useState<CoinObject[]>([]);
-    const [loading, setLoading] = useState(true);
-    useEffect(() => {
-        (async () => {
-            const response = await fetch('https://api.coinpaprika.com/v1/coins');
-            const json = await response.json();
-            setCoins(json.slice(0,10));
-            setLoading(false);
-        })();
-    }, []);
+    const {isLoading, data} = useQuery<CoinObject[]>(["allCoins"], fetchCoin)
+
+    /* const [coins, setCoins] = useState<CoinObject[]>([]);
+    const [loading, setLoading] = useState(true); */
     return (
         <Container>
             <Header>
                 <Title>Coins</Title>
             </Header>
-            {loading ? (<Loader>loading ...</Loader>) : (<CoinList>
-                {coins.map(coin => <Coin key={coin.id}>
+            {isLoading ? (<Loader>loading ...</Loader>) : (<CoinList>
+                {data?.slice(0,100).map(coin => <Coin key={coin.id}>
                                     <Link to={`/${coin.id}`} state={coin}>
                                     <Img src = {`https://coinicons-api.vercel.app/api/icon/btc}`}/>
                                     {coin.name} &rarr;</Link>
