@@ -3,6 +3,8 @@ import {Link} from 'react-router-dom'
 import {useState, useEffect} from 'react'
 import {useQuery} from 'react-query'
 import {fetchCoin} from './api'
+import {useSetRecoilState} from 'recoil'
+import {isDarkAtom} from '..//atoms'
 
 
 interface CoinObject {
@@ -28,7 +30,7 @@ const Header = styled.header`
 const CoinList = styled.ul``;
 const Coin = styled.li`
     background-color:white;
-    color: ${props => props.theme.bgColor};
+    color: ${props => props.theme.textColor};
     padding: 20px;
     margin-bottom : 10px;
     border-radius : 15px;
@@ -60,8 +62,13 @@ const Img = styled.img`
     margin-right:10px
 `
 
+interface ICoinsProps{
 
-function Coins() {
+}
+
+function Coins({}:ICoinsProps) {
+    const setDarkAtom = useSetRecoilState(isDarkAtom)
+    const toggleDarkAtom = () => setDarkAtom((prev)=> !prev)
     const {isLoading, data} = useQuery<CoinObject[]>(["allCoins"], fetchCoin)
 
     /* const [coins, setCoins] = useState<CoinObject[]>([]);
@@ -70,7 +77,8 @@ function Coins() {
         <Container>
             <Header>
                 <Title>Coins</Title>
-            </Header>
+                <button onClick={toggleDarkAtom}>Toggle Mode</button>
+            </Header> 
             {isLoading ? (<Loader>loading ...</Loader>) : (<CoinList>
                 {data?.slice(0,100).map(coin => <Coin key={coin.id}>
                                     <Link to={`/${coin.id}`} state={coin}>

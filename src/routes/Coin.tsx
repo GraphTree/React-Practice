@@ -142,7 +142,10 @@ interface LocationState {
     }
 }
 
-function Coin() {
+interface ICoinProps {
+}
+
+function Coin({}:ICoinProps) {
     
     const {coinId} = useParams<keyof RouteParams>() as RouteParams;
     const {state} = useLocation() as  LocationState;
@@ -200,7 +203,7 @@ function Coin() {
 
             <Routes>
                 <Route path='price' element={<Price/>} /> 
-                <Route path='chart' element={<Chart coinId={coinId}/>} /> 
+                <Route path='chart' element={<Chart  coinId={coinId}/>} /> 
             </Routes>
 
           </>
